@@ -13,8 +13,7 @@
 6. [Invalidate & Revoke Logic](#-invalidate--revoke-logic)
 7. [View Count Logic](#-view-count-logic)
 8. [Race-Condition Handling](#-race-condition-handling)
-9. [Technical Questions & Answers](#-technical-questions--answers)
-10. [Test Credentials](#-test-credentials)
+9. [Test Credentials](#-test-credentials)
 
 ---
 
@@ -199,31 +198,6 @@ t3     Returns updated row (200 OK)     Acquires lock, evaluates WHERE  Lock rel
 t4     -                                Matches 0 rows! (used_at NOT NULL)
 t5     -                                Returns 410 Gone (Burned)       used_at unchanged
 ```
-
----
-
-## 💬 Technical Questions & Answers
-
-### 1. How do you prevent two users from using a one-time link at the same time?
-We eliminate the check-then-act vulnerability by using a **single atomic SQL UPDATE with a conditional WHERE clause** (`WHERE used_at IS NULL ... RETURNING *`). PostgreSQL's row-level lock evaluates concurrent requests sequentially: the first request updates the row and sets `used_at = NOW()`, while the second request fails the condition, matches 0 rows, and is rejected with `410 Gone: ONE_TIME_USED`.
-
-### 2. How do you update view count safely?
-We update view counts using an **in-database atomic increment**:
-```sql
-SET view_count = view_count + 1
-```
-We never read the count into Node.js memory (`count + 1`) and write it back, which avoids lost updates under concurrent traffic.
-
-### 3. How would this work if 1 million people opened the link?
-1. **CDN Edge Caching**: Cache public note content at Cloudflare/CloudFront edge nodes (`s-maxage=60`). Over 99% of requests are served directly from edge memory in under 15ms without touching origin databases.
-2. **Decoupled View Count Ingestion**: Instead of locking database rows on every hit, write view events to Redis (`INCR share:{token}:views`) or a Kafka/SQS stream. A background worker batches and flushes counts to PostgreSQL every 5 seconds.
-3. **Read Replicas**: Distribute database read queries across read replicas using connection pooling (PgBouncer).
-
-### 4. How would you prevent brute-force attempts on password-protected links?
-1. **Sliding-Window Rate Limiting**: Limit attempts to 5 failed tries per 10 minutes per IP/token before a 429 lockout (`src/server/routes/share.ts`).
-2. **High Dynamic Key Entropy**: Auto-generated 10-character alphanumeric keys provide ~58 bits of entropy ($3 \times 10^{17}$ combinations).
-3. **Timing-Safe Comparison**: Passwords are verified using bcrypt's constant-time comparison.
-4. **CAPTCHA Protection**: Trigger Cloudflare Turnstile after 3 failed attempts.
 
 ---
 

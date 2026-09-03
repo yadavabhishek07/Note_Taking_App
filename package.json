@@ -1,0 +1,35 @@
+{
+  "name": "note-taking-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "test:api": "node scripts/verify-e2e.mjs"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.14",
+    "@hono/zod-validator": "^0.4.2",
+    "bcryptjs": "^2.4.3",
+    "drizzle-orm": "^0.38.3",
+    "hono": "^4.6.14",
+    "jose": "^5.9.6",
+    "next": "^14.2.24",
+    "postgres": "^3.4.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.17.10",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.30.1",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  }
+}

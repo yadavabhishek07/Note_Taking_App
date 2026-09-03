@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #24272e;
+  color: #f3f4f6;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Light Grey Theme Override */
+html.light body {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+html.light nav {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+}
+
+html.light nav a,
+html.light nav span,
+html.light nav button {
+  color: #374151 !important;
+}
+
+html.light nav a:hover,
+html.light nav button:hover {
+  color: #111827 !important;
+}
+
+html.light .bg-zinc-900 {
+  background-color: #ffffff !important;
+  border-color: #d1d5db !important;
+  color: #111827 !important;
+}
+
+html.light .bg-zinc-950 {
+  background-color: #f9fafb !important;
+  border-color: #d1d5db !important;
+  color: #111827 !important;
+}
+
+html.light .border-zinc-800 {
+  border-color: #d1d5db !important;
+}
+
+html.light .border-zinc-700 {
+  border-color: #d1d5db !important;
+}
+
+html.light .text-white {
+  color: #111827 !important;
+}
+
+html.light .text-zinc-200 {
+  color: #1f2937 !important;
+}
+
+html.light .text-zinc-300 {
+  color: #374151 !important;
+}
+
+html.light .text-zinc-400 {
+  color: #4b5563 !important;
+}
+
+html.light .text-zinc-500 {
+  color: #6b7280 !important;
+}
+
+html.light select.bg-zinc-950 {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+html.light button.bg-white {
+  background-color: #18181b !important;
+  color: #ffffff !important;
+}
+
+html.light button.bg-white:hover {
+  background-color: #27272a !important;
+}

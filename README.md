@@ -2,6 +2,8 @@
 
 > A simple, secure note-sharing web application featuring time-based expiration, one-time self-destruct links, dynamic password protection, and atomic race-condition prevention.
 
+**Live URL**: [https://note-taking-app-phi-ten.vercel.app](https://note-taking-app-phi-ten.vercel.app)
+
 ---
 
 ## 📑 Table of Contents

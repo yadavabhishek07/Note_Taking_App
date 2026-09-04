@@ -72,7 +72,9 @@ export async function getDb() {
   const { PGlite } = await import('@electric-sql/pglite');
   const { drizzle: drizzlePglite } = await import('drizzle-orm/pglite');
 
-  const dataDir = path.resolve(process.cwd(), 'data', 'pglite');
+  const dataDir = process.env.VERCEL
+    ? path.resolve('/tmp', 'pglite')
+    : path.resolve(process.cwd(), 'data', 'pglite');
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
   }
